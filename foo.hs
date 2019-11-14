@@ -5,8 +5,8 @@ foo :: [Int] -> Int
 foo [] = 0
 foo (x:xs) = x + foo xs
 
-checa1a10 :: [Int] -> [Bool]
-checa1a10 (xs) = [x `elem` xs | x <- [1..9]]
+checa1a10 :: [Int] -> Bool
+checa1a10 (xs) = checa1a10' [x `elem` xs | x <- [1..9]]
 
 
 checa1a10' :: [Bool] -> Bool
@@ -24,6 +24,9 @@ hasEqualLine :: Int -> [Int] -> Bool
 hasEqualLine _ [] = False
 hasEqualLine i xs = i `elem` xs
 
+hasNoEqualLine :: Int -> [Int] -> Bool
+hasNoEqualLine i xs = not (i `elem` xs)
+
 hasEqualLine' :: Int -> [[Int]] -> Bool
 hasEqualLine' _ [] = False
 hasEqualLine' i (x:xs) = ((i `elem` x) || (hasEqualLine' i xs))
@@ -31,6 +34,12 @@ hasEqualLine' i (x:xs) = ((i `elem` x) || (hasEqualLine' i xs))
 hasEqualColumn :: Int -> Int -> [[Int]] -> Bool
 hasEqualColumn _ _ [] = False
 hasEqualColumn columnNumber number (x:xs) = ((number == x !! columnNumber) || (hasEqualColumn columnNumber number xs))
+
+
+hasNoEqualColumn :: Int -> Int -> [[Int]] -> Bool
+hasNoEqualColumn _ _ [] = False
+hasNoEqualColumn columnNumber number (x:xs) = not ((number == x !! columnNumber) || (hasEqualColumn columnNumber number xs))
+
 
 splitString :: String -> String
 splitString (x:xs)
@@ -51,10 +60,20 @@ transformInt (x:xs) = (read x::Int)  : transformInt xs
 splitOn2 :: String -> [[String]]
 splitOn2 xs = map (splitOn ",") (filter (not . null) (splitOn "[" $ splitString xs))
 
+
+solve :: [[Int]] -> [[Int]]
+solve null xs = []
+solve (x:xs)
+      |x == 0 = solve ([[y | y <- [1..9], y `notElem` x, hasEqualColumn (\(Just i)->i) $ findIndex (==0) x  ]])
+
+
+(\(Just i)->i) a
+
 solve :: [Int] -> [Int]
+solve [] = []
 solve (x:xs)
 
 
 findReplaceElement :: [[Int]] -> (Int, Int)
 findReplaceElement  [] = []
-findReplaceElement (xs:x)  = 
+findReplaceElement (xs:x)  =
