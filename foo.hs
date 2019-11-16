@@ -64,16 +64,29 @@ splitOn2 xs = map (splitOn ",") (filter (not . null) (splitOn "[" $ splitString 
 solve :: [[Int]] -> [[Int]]
 solve null xs = []
 solve (x:xs)
-      |x == 0 = solve ([[y | y <- [1..9], y `notElem` x, hasEqualColumn (\(Just i)->i) $ findIndex (==0) x  ]])
-
+      |z == 0 = solve ([y | y <- [1..9], y `notElem` x, hasEqualColumn y ((\(Just i)->i) $ findIndex (==0)) (x:xs)])
+      where z =
 
 (\(Just i)->i) a
 
-solve :: [Int] -> [Int]
-solve [] = []
-solve (x:xs)
-
+populateGrid :: [[Int]] -> Int
+populateGrid xs = traverse (traverse readCell) . xs
+  where
+    readCell 0 = Just $ Possible [1..9]
+    readCell c
+      | c > 0 = Just . Fixed . c
+      | otherwise = Nothing
 
 findReplaceElement :: [[Int]] -> (Int, Int)
 findReplaceElement  [] = []
 findReplaceElement (xs:x)  =
+
+
+, hasEqualColumn y ((\(Just i)->i) $ findIndex (==0)) x
+
+
+
+tt :: [Int] -> [Int]
+tt [] = []
+tt x:xs
+    | x == 0 = [y | y <- [1..9], y `notElem` xs, tt y:xs] 
