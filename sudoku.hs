@@ -10,8 +10,7 @@ import Prelude
 
 main :: IO()
 main  = do
-      let x = readLn
-      s <- x
+      s <- readLn
       imprimeSudoku (solve s 0 0 1)
 
 
@@ -50,7 +49,7 @@ colunaVazia s c j = j `elem` [1..9] && j `notElem` retornaColuna s c
 linhaVazia :: [[Int]] -> Int -> Int -> Bool
 linhaVazia s l j = j `elem` [1..9] && j `notElem` retornaLinha s l
 
-quadradoVazio :: [[Int]] -> Int -> Int -> Int-> Bool
+quadradoVazio :: [[Int]] -> Int -> Int -> Int -> Bool
 quadradoVazio s l c j = j `notElem` retornaQuadrado s l c
 
 
@@ -86,9 +85,9 @@ solve s l c j
     | not $ jogadaValida s l c j = solve s l c (j+1)
     | otherwise = solucao' s l c j
 
-solucao' :: [[Int]] -> Int -> Int -> Int-> [[Int]]
+solucao' :: [[Int]] -> Int -> Int -> Int -> [[Int]]
 solucao' s l c j = let temp = solve (fazJogada s l c j) l c 1 in
-                    if temp == [[]] then solve s l c (j+1) else temp
+                    if temp == [[]] then solve s l c (j + 1) else temp
 
 imprimeSudoku :: [[Int]] -> IO()
 imprimeSudoku [] = return()

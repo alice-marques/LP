@@ -7,8 +7,8 @@ import Data.Maybe
 
 tt :: [Int] -> [Int]
 tt xs
-    |0 `elem` xs = trocaNum' $ map (\n -> if n == 0 then head [x | x <- [1..9], x `notElem` xs] else n) xs
-    |otherwise = xs
+    | 0 `elem` xs = trocaNum' $ map (\n -> if n == 0 then head [x | x <- [1..9], x `notElem` xs] else n) xs
+    | otherwise = xs
 
 trocaNum' :: [Int] -> [Int]
 trocaNum' [] = []
